@@ -30,7 +30,7 @@ superagent.get(stringUtil.outerUrlAssemble(0))
         var str = $(".dateTable .tableHeadBg").last().html();
         pageNum = parseInt(str.split("页&nbsp;")[0].split('1/')[1]);
 
-        for (var i = 0; i < 2; i += 1) {
+        for (var i = 0; i < pageNum; i += 1) {
             outerPageUrls.push(stringUtil.outerUrlAssemble(i));
         }
 
