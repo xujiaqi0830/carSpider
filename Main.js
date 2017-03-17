@@ -7,7 +7,6 @@ var cheerio = require("cheerio");
 var fs = require("fs");
 var superagent = require("superagent");
 var request = require("sync-request");
-var xlsx = require("xlsx");
 
 // 外层页面url
 var outerPageUrls = [];
@@ -84,26 +83,32 @@ superagent.get(stringUtil.outerUrlAssemble(0))
                     })
                     .then(function(urls) {
                         Promise.map(urls, function(url, index) {
+
                                 console.log("正在爬取最终结果：" + url);
+
                                 var html;
                                 var txtStr = "";
+
                                 try {
                                     var res = request('GET', url);
                                     html = res.getBody();
+                                    // 生成html
                                     fs.writeFileSync(__dirname + "/pageDist/" + index + ".html", html, 'utf8');
                                     var $ = cheerio.load(html, {
                                         decodeEntities: false
                                     });
 
+                                    // 生成txt
                                     var inner = $("td").each(function(index, ele) {
                                         if (index >= 8) {
                                             var tempStr = ($(this).html()).replace(/<p>|<\/p>|<strong>|<\/strong>/ig, "").trim();
-											if (tempStr !== "其他配置信息") {
-												txtStr += (tempStr + "\n");
-											}
+                                            if (tempStr !== "其他配置信息") {
+                                                txtStr += (tempStr + "\n");
+                                            }
                                         }
                                     });
                                     fs.writeFileSync(__dirname + "/txtDist/" + index + ".txt", txtStr, 'utf8');
+
                                 } catch (err) {
                                     console.log(err);
                                     finalErrNum += 1;
