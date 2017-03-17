@@ -1,6 +1,9 @@
 var ConstantUtil = {
 
-    LIST_PAGE_PREFIX_URL: 'http://www.qcsanbao.cn/webqcba/DVMProducerServlet?method=getWhereList&p='
+    // 并发数，影响速度，但太大容易被网站屏蔽
+    REQUEST_CONCURRENCY_OUTER: 3,
+    REQUEST_CONCURRENCY_INNER: 3,
+    REQUEST_CONCURRENCY_FINAL: 3
 };
 
 module.exports = ConstantUtil;

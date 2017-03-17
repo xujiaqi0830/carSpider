@@ -2,35 +2,109 @@
 
 var Promise = require("bluebird");
 var constantUtil = require("./utils/ConstantUtil.js");
-var superagent = require('superagent');
-var async = require("async");
-// var superagentAsnyc = Promise.promisifyAll(require("superagent"));
+var stringUtil = require("./utils/StringUtil.js");
 var cheerio = require("cheerio");
-var _ = require("lodash");
 var fs = require("fs");
-// var request = require("superagent-bluebird-promise");
-// var requestAsync = Promise.promisifyAll(require("superagent-bluebird-promise"));
+var request = require("sync-request");
 
-var listMissionUrls = {};
-var pageNum;
+// 外层页面url
+var outerPageUrls = [];
+// 外层页数
+var pageNum = 0;
+// 失败计数器
+var outerErrNum = 0;
+var innerErrNum = 0;
+var finalErrNum = 0;
 
-superagent.get(constantUtil.LIST_PAGE_PREFIX_URL + "1")
+superagent.get(stringUtil.outerUrlAssemble(0))
     .end(function(err, res) {
+
         if (err) {
             console.log(err);
         }
+
         var $ = cheerio.load(res.text, {
             decodeEntities: false
         });
         var str = $(".dateTable .tableHeadBg").last().html();
-        // 总页数
         pageNum = parseInt(str.split("页&nbsp;")[0].split('1/')[1]);
 
-        for (var i = 0; i < pageNum; i += 1) {
-            listMissionUrls[i + 1] = constantUtil.LIST_PAGE_PREFIX_URL + (i + 1);
+        for (var i = 0; i < 5; i += 1) {
+            outerPageUrls.push(stringUtil.outerUrlAssemble(i));
         }
 
-		var temp = JSON.stringify(listMissionUrls);
-		fs.writeFileSync("./2nd/2nd.txt", temp, 'utf8');
+        Promise.map(outerPageUrls, function(url) {
 
+                console.log("正在爬取外层：" + url);
+                var innerUrl;
+
+                try {
+                    var res = request('GET', url);
+                    var $ = cheerio.load(res.getBody(), {
+                        decodeEntities: false
+                    });
+                    var temp = $("#mytable a[name=tpc]").attr("href").split("(")[1].split(")")[0].substr(1);
+                    var temp2 = temp.substring(0, temp.length - 1);
+                    var tempArr = temp2.split("','");
+                    innerUrl = stringUtil.innnerUrlAssemble(tempArr[0], tempArr[1], tempArr[2], tempArr[3]);
+                } catch (err) {
+                    console.log(err);
+                    outerErrNum += 1;
+                }
+
+                return innerUrl;
+            }, {
+                // 外层并发数目
+                concurrency: constantUtil.REQUEST_CONCURRENCY_OUTER
+            })
+            .then(function(urls) {
+
+                Promise.map(urls, function(url) {
+                        console.log("正在爬取内层：" + url);
+                        var finalUrl;
+
+                        try {
+                            var res = request('GET', url);
+                            var $ = cheerio.load(res.getBody(), {
+                                decodeEntities: false
+                            });
+                            var temp = $("a[name=tpc]").attr("href");
+                            finalUrl = stringUtil.finalUrlAssemble(temp);
+                        } catch (err) {
+                            console.log(err);
+                            innerErrNum += 1;
+                        }
+
+                        return finalUrl;
+                    }, {
+                        // 内层并发数目
+                        concurrency: constantUtil.REQUEST_CONCURRENCY_INNER
+                    })
+                    .then(function(urls) {
+                        Promise.map(urls, function(url, index) {
+                                console.log("正在爬取最终结果：" + url);
+                                var html;
+
+                                try {
+                                    var res = request('GET', url);
+                                    html = res.getBody();
+                                    fs.writeFileSync(__dirname + "/dist/" + index + ".html", html, 'utf8');
+                                } catch (err) {
+                                    console.log(err);
+                                    finalErrNum += 1;
+                                }
+
+                                return html;
+                            }, {
+                                // 最终层并发数目
+                                concurrency: constantUtil.REQUEST_CONCURRENCY_FINAL
+                            })
+                            .then(function() {
+                                console.log("爬取完成!");
+                                console.log("外层错误数：" + outerErrNum);
+                                console.log("内层错误数：" + innerErrNum);
+                                console.log("终层错误数：" + finalErrNum);
+                            });
+                    });
+            });
     });

@@ -11,7 +11,7 @@
   "dependencies": {
     "bluebird": "^3.5.0",
     "cheerio": "^0.22.0",
-    "lodash": "^4.17.4",
-    "superagent": "^3.5.0"
+    "superagent-charset": "^1.1.1",
+    "sync-request": "^4.0.1"
   }
 }

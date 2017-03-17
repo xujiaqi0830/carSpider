@@ -1,0 +1,258 @@
+
+
+
+
+
+
+
+
+
+<html>
+<head>
+<title>车型信息</title>
+<link rel="stylesheet" type="text/css" href="mystyle.css">
+<link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+<body style="text-align:center;">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    <title>Untitled Page</title>
+    <link href="page.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+function openMode(url, width, height) {
+	var ie6 = navigator.appVersion.indexOf('MSIE 6');
+	if (ie6 != -1 && ie6 < 20) {
+		height = parseInt(height) + 49;
+	}
+	var strModalInfo = "dialogWidth:" + width + "px;dialogHeight:" + height
+			+ "px;help:no;resizable:no;status:no;scroll:yes;";
+	strModalInfo += "center:yes;";
+	var returnValue = window.showModalDialog(url, window, strModalInfo);
+	return returnValue;
+}
+	function tocount(urls){
+		openMode(urls, '700px', '350px');
+		//window.open(urls);
+	}
+</script>
+</head>
+<body>
+<div class="topBg">
+    <div class="logoBg"></div>
+    <div style="padding-top: 5px;margin-left: -20px;float:left;">
+ 	<a href="http://www.qcsanbao.cn" style="font-size: 14px;color: #ffffff;">网站首页</a>&nbsp;
+ 	<!-- <a href="javascript:tocount('DVMProducerServlet?method=getReadCount')" style="font-size: 14px;color: #ffffff;">访问统计</a> -->&nbsp;
+ 	<a href="DVMProducerServlet?method=getAllList" style="font-size: 14px;color: #ffffff;">汽车产品三包信息</a> 
+ 	</div>
+ </div>
+ </body>
+</html>
+
+	<div >
+	<table class="formTable" style="width: 95%;">
+		<tr>
+			<td noWrap colspan="4" class="first" style="padding-left:0px;">
+			<input type="button" id="backobj" onclick="javascript:history.back()" style="background-image:url(images/back.png);background-repeat:no-repeat;width: 58px;height: 21px;border:0px;color:#fff;line-height:21px;" value="返回"/>
+			</td>
+		</tr>	
+		<tr>
+			<td noWrap colspan="4" class="first">
+				<StrONG>车型图片</StrONG>
+			</td>
+		</tr>	
+			
+				<tr class="firsttr">
+					<td width="25%" class="colorBg"></td>
+					<td width="25%" align="right">
+						<img src="" style="display:none;" />
+						
+						
+					</td>
+					<td width="25%" align="right">
+						<img src="" style="display:none;" />
+						
+						
+					</td>
+					<td width="25%" align="right">
+						<img src="" style="display:none;" />
+						
+						
+					</td>
+					
+				</tr>
+				<tr class="firsttr">
+					<td class="first">品牌</td>
+					<td>广汽丰田</td>
+					<td class="first">车型系列</td>
+					<td>致享</td>
+				</tr>
+				<tr class="firsttr">
+					<td class="first" noWrap>质量担保条款名称</td>
+					<td>
+							
+								<a href="ThreeServlet?method=getThree&author=11e3-0f9c-35571161-9506-b9174d954819&qualityClauseName=GQFTQC质量担保条款20170313001&brand=广汽丰田&vehiceSeries=致享&typename=1.3E魅动版CVT&typecode=GTM7130YCE">致享质量担保条款</a>
+						    
+							
+					
+						
+					</td>
+					<td class="first">车辆类型</td>
+					<td>普通乘用车</td>
+				</tr>
+				
+				<tr class="firsttr"> 
+					<td class="first" noWrap>车型名称</td>
+					<td>1.3E魅动版CVT</td>
+					<td class="first" noWrap>车型型号</td>
+					<td>GTM7130YCE</td>
+				</tr>
+				<tr class="firsttr">
+					<td class="first">年款</td>
+					<td>2017</td>
+					<td class="first">上市日期</td>
+					<td>2017-3-6</td>
+				</tr>
+				<tr>
+					<td noWrap colspan="4" class="first">
+						<StrONG>发动机类型</StrONG>
+					</td>
+				</tr>	
+				<tr class="firsttr">
+				
+					<td class="first"><p>发动机型号</p></td>
+					<td colSpan="3">6NR</td>
+				</tr>
+				<tr class="firsttr">
+					<td class="first"><p>冷却方式</p></td>
+					<td colSpan="3">水冷</td>
+				</tr>
+				<tr class="firsttr">
+					<td class="first"><p>进气系统分类</p></td>
+					<td colSpan="3">自然吸气式</td>
+				</tr>
+				<tr class="firsttr">
+					<td class="first"><p>气缸排列方式分类</p></td>
+					<td colSpan="3" noWrap> 直列</td>
+				</tr>
+				<tr class="firsttr">
+					<td class="first"><p>气门机构种分类</p></td>
+					<td colSpan="3" noWrap> 顶置凸轮轴（OHC）</td>
+				</tr>
+				<tr class="firsttr">
+					<td class="first"><p>电控系统型号</p></td>
+					<td colSpan="3">DENSO/89661-0DW00/30DS2000</td>
+				</tr>
+				<tr class="firsttr">
+					<td class="first"><p>排放水平</p></td>
+					<td colSpan="3">国Ⅴ</td>
+				</tr>
+				<tr class="firsttr">
+					<td class="first"><p>排量（ml）</p></td>
+					<td colSpan="3">1329</td>
+				</tr>
+				<tr>
+					<td noWrap colspan="4" class="first">
+						<StrONG>其他配置信息</StrONG>
+					</td>
+				</tr>	
+				<tr class="firsttr">
+					<td class="first" noWrap>按照所用燃料分类</td>
+					<td colSpan="3" noWrap><p>汽油机 </p>
+					</td>
+				</tr>
+				<tr class="firsttr">
+					<td class="first">变速器型号</td>
+					<td colSpan="3">K312</td>
+				</tr>
+				<tr class="firsttr">
+					<td class="first">变速器类型 </td>
+					<td colSpan="3">CVT-无级变速器</td>
+				</tr>
+				<tr class="firsttr">
+					<td class="first">车辆驱动形式</td>
+					<td colSpan="3">前置后驱（FR）</td>
+				</tr>
+				<tr class="firsttr">
+					<td class="first">制动类型 </td>
+					<td colSpan="3">鼓式;盘式</td>
+				</tr>	
+				<tr class="firsttr">
+					<td class="first">转向系统类型</td>
+					<td>电动助力式</td>
+					<td class="first" noWrap>车辆尺寸(mm)(长*宽*高)</td>
+					<td>4440×1700×1490</td>
+				</tr>
+				
+				<tr class="firsttr">
+					<td class="first">是否有牵引装置</td>
+					<td>是</td>
+					<td class="first">是否有ABS</td>
+					<td>是</td>
+				</tr>
+				<tr class="firsttr">
+					<td class="first">座位数</td>
+					<td>五座</td>
+					<td class="first">车门数量</td>
+					<td>四门</td>
+				</tr>
+				<tr class="firsttr">
+					<td class="first">车身型式</td>
+					<td>承载式</td>
+					<td class="first">是否有电子稳定控制系统</td>
+					<td>是</td>
+				</tr>
+				<tr class="firsttr">
+					<td class="first">是否有巡航控制系统</td>
+					<td>否</td>
+					<td class="first">是否有ISOFIX接口</td>
+					<td>是</td>
+				</tr>
+				<tr class="firsttr">
+					<td class="first">最大总质量(kg)</td>
+					<td>1500</td>
+					<td class="first">轴距(mm)</td>
+					<td>2550</td>
+				</tr>
+				<tr class="firsttr">
+					<td class="first">前轮距(mm)</td>
+					<td>1460</td>
+					<td class="first">后轮距(mm)</td>
+					<td>1460</td>
+				</tr>
+				<tr class="firsttr">
+					<td class="first">安全带装备类型</td>
+					<td colSpan="3">三点式</td>
+				</tr>
+				<tr class="firsttr">
+					<td class="first">安全气囊装备数量及类型</td>
+					<td colSpan="3"><p>【1】 个驾驶员前气囊  【1】个前排乘员前气囊 【0】个侧面和头部气囊 【0】个后排乘员气囊   【0】个其它型式气囊</p>
+					</td>
+				</tr>
+				<tr class="firsttr">
+					<td class="colorBg">轮胎品牌与规格</td>
+					<td>普利司通,住友橡胶,韩泰轮胎,185/60R15 84H</td>
+					<td class="colorBg">其它系统装备</td>
+					<td>无</td>
+				</tr>
+			
+		
+	</table>
+	</div>
+	<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    <title>Untitled Page</title>
+    <link href="page.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div class="bottom">
+	<br /><br />
+	<span style="font-size: 14px;color: #ffffff; text-align: center;">如需转载请注明出处</span>
+   
+ </div>
+</body>
+</html>
+
+</body>
+</html>
