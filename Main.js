@@ -16,6 +16,9 @@ var pageNum = 0;
 var outerErrNum = 0;
 var innerErrNum = 0;
 var finalErrNum = 0;
+var outerErrIndexArr = [];
+var innerErrIndexArr = [];
+var finalErrIndexArr = [];
 
 superagent.get(stringUtil.outerUrlAssemble(0))
     .end(function(err, res) {
@@ -34,7 +37,7 @@ superagent.get(stringUtil.outerUrlAssemble(0))
             outerPageUrls.push(stringUtil.outerUrlAssemble(i));
         }
 
-        Promise.map(outerPageUrls, function(url) {
+        Promise.map(outerPageUrls, function(url, index) {
 
                 console.log("正在爬取外层：" + url);
                 var innerUrl;
@@ -51,6 +54,7 @@ superagent.get(stringUtil.outerUrlAssemble(0))
                 } catch (err) {
                     console.log(err);
                     outerErrNum += 1;
+					outerErrIndexArr.push(index);
                 }
 
                 return innerUrl;
@@ -60,7 +64,7 @@ superagent.get(stringUtil.outerUrlAssemble(0))
             })
             .then(function(urls) {
 
-                Promise.map(urls, function(url) {
+                Promise.map(urls, function(url, index) {
                         console.log("正在爬取内层：" + url);
                         var finalUrl;
 
@@ -74,6 +78,7 @@ superagent.get(stringUtil.outerUrlAssemble(0))
                         } catch (err) {
                             console.log(err);
                             innerErrNum += 1;
+							innerErrIndexArr.push(index);
                         }
 
                         return finalUrl;
@@ -112,6 +117,7 @@ superagent.get(stringUtil.outerUrlAssemble(0))
                                 } catch (err) {
                                     console.log(err);
                                     finalErrNum += 1;
+									finalErrIndexArr.push(index);
                                 }
 
                                 return html;
@@ -124,6 +130,9 @@ superagent.get(stringUtil.outerUrlAssemble(0))
                                 console.log("外层错误数：" + outerErrNum);
                                 console.log("内层错误数：" + innerErrNum);
                                 console.log("终层错误数：" + finalErrNum);
+								console.log("外层错误index：" + outerErrIndexArr);
+                                console.log("内层错误index：" + innerErrIndexArr);
+                                console.log("终层错误index：" + finalErrIndexArr);
                             });
                     });
             });
