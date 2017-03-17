@@ -11,7 +11,9 @@
   "dependencies": {
     "bluebird": "^3.5.0",
     "cheerio": "^0.22.0",
+    "superagent": "^3.5.0",
     "superagent-charset": "^1.1.1",
-    "sync-request": "^4.0.1"
+    "sync-request": "^4.0.1",
+    "xlsx": "^0.9.3"
   }
 }

@@ -5,7 +5,9 @@ var constantUtil = require("./utils/ConstantUtil.js");
 var stringUtil = require("./utils/StringUtil.js");
 var cheerio = require("cheerio");
 var fs = require("fs");
+var superagent = require("superagent");
 var request = require("sync-request");
+var xlsx = require("xlsx");
 
 // 外层页面url
 var outerPageUrls = [];
@@ -29,7 +31,7 @@ superagent.get(stringUtil.outerUrlAssemble(0))
         var str = $(".dateTable .tableHeadBg").last().html();
         pageNum = parseInt(str.split("页&nbsp;")[0].split('1/')[1]);
 
-        for (var i = 0; i < 5; i += 1) {
+        for (var i = 0; i < 2; i += 1) {
             outerPageUrls.push(stringUtil.outerUrlAssemble(i));
         }
 
@@ -84,11 +86,24 @@ superagent.get(stringUtil.outerUrlAssemble(0))
                         Promise.map(urls, function(url, index) {
                                 console.log("正在爬取最终结果：" + url);
                                 var html;
-
+                                var txtStr = "";
                                 try {
                                     var res = request('GET', url);
                                     html = res.getBody();
-                                    fs.writeFileSync(__dirname + "/dist/" + index + ".html", html, 'utf8');
+                                    fs.writeFileSync(__dirname + "/pageDist/" + index + ".html", html, 'utf8');
+                                    var $ = cheerio.load(html, {
+                                        decodeEntities: false
+                                    });
+
+                                    var inner = $("td").each(function(index, ele) {
+                                        if (index >= 8) {
+                                            var tempStr = ($(this).html()).replace(/<p>|<\/p>|<strong>|<\/strong>/ig, "").trim();
+											if (tempStr !== "其他配置信息") {
+												txtStr += (tempStr + "\n");
+											}
+                                        }
+                                    });
+                                    fs.writeFileSync(__dirname + "/txtDist/" + index + ".txt", txtStr, 'utf8');
                                 } catch (err) {
                                     console.log(err);
                                     finalErrNum += 1;
